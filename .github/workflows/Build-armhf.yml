@@ -13,9 +13,6 @@ jobs:
       - name: save working directory in variable 'DIR'
         run: echo "DIR=$(pwd)" >> $GITHUB_ENV
         
-      - name: Checkout
-        uses: actions/checkout@v2
-        
       - name: setup node
         uses: actions/setup-node@v2
         with:
@@ -33,12 +30,12 @@ jobs:
           cd $DIR/min
           npm install
           npm run buildRaspi
-          echo "DEB=$(basename /home/runner/work/minbrowser-arm-builds/minbrowser-arm-builds/min/dist/min*armhf.deb)" >> $GITHUB_ENV
+          echo "DEB=$(basename dist/min*.deb)" >> $GITHUB_ENV 
           
       - name: Upload to release
         uses: gacts/upload-to-release@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: '/home/runner/work/minbrowser-arm-builds/minbrowser-arm-builds/min/dist/${{ env.DEB }}'
+          file: 'dist/${{ env.DEB }}'
           type: 'application/x-debian-package'
