@@ -40,5 +40,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: '${{ env.DIR }}/min/dist/${{ env.DEB }}'
+          file: '/home/runner/work/minbrowser-arm-builds/minbrowser-arm-builds/min/dist/${{ env.DEB }}'
           type: 'application/x-debian-package'
