@@ -18,12 +18,12 @@ jobs:
         with:
          node-version: '14'
 
-      - name: clone freetube repo and checkout latest release
+      - name: clone min repo and checkout latest release
         run: |
           cd $DIR
           rm -rf min
           git clone https://github.com/minbrowser/min
-          cd FreeTube
+          cd min
           
       - name: Build
         run: |
