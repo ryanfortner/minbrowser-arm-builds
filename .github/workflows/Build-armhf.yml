@@ -33,6 +33,7 @@ jobs:
           cd $DIR/min
           npm install
           npm run buildRaspi
+          ls
           echo "DEB=$(basename dist/min*armhf.deb)" >> $GITHUB_ENV
           
       - name: Upload to release
