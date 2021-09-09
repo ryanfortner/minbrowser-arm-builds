@@ -40,5 +40,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: '${DIR}/min/dist/${{ env.DEB }}'
+          file: '${{ env.DIR }}/min/dist/${{ env.DEB }}'
           type: 'application/x-debian-package'
