@@ -30,7 +30,7 @@ jobs:
           cd $DIR/min
           npm install
           npm run buildRaspi
-          echo "DEB=$(basename build/min*armhf.deb)" >> $GITHUB_ENV
+          echo "DEB=$(basename dist/min*armhf.deb)" >> $GITHUB_ENV
           
       - name: Upload to release
         uses: gacts/upload-to-release@v1.0.1
