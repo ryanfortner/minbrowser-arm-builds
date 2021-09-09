@@ -1,0 +1,41 @@
+name: Build-armhf
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+         node-version: '14'
+
+      - name: clone freetube repo and checkout latest release
+        run: |
+          cd $DIR
+          rm -rf min
+          git clone https://github.com/minbrowser/min
+          cd FreeTube
+          
+      - name: Build
+        run: |
+          cd $DIR/min
+          npm install
+          npm run buildRaspi
+          echo "DEB=$(basename build/min*armhf.deb)" >> $GITHUB_ENV
+          
+      - name: Upload to release
+        uses: gacts/upload-to-release@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: 'dist/${{ env.DEB }}'
+          type: 'application/x-debian-package'
