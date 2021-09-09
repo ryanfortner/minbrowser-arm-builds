@@ -33,7 +33,6 @@ jobs:
           cd $DIR/min
           npm install
           npm run buildRaspi
-          ls
           echo "DEB=$(basename dist/min*armhf.deb)" >> $GITHUB_ENV
           
       - name: Upload to release
@@ -41,5 +40,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: 'dist/${{ env.DEB }}'
+          file: '${DIR}/min/dist/${{ env.DEB }}'
           type: 'application/x-debian-package'
