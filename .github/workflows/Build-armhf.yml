@@ -34,8 +34,9 @@ jobs:
           echo "DEB=$(basename dist/app/min*.deb)" >> $GITHUB_ENV 
           
       - name: Upload to release
-        uses: JasonEtco/upload-to-release@master
-        with:
-         args: '${{ env.DIR }}/min/dist/app/${{ env.DEB }}'
+        uses: docker://gacts/upload-to-release:latest
         env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: '${{ env.DIR }}/min/dist/app/${{ env.DEB }}'
+          type: 'application/x-debian-package'
