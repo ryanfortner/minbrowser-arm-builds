@@ -32,3 +32,11 @@ jobs:
           npm run buildRaspi
           ls dist/app/
           echo "DEB=$(basename dist/app/min*.deb)" >> $GITHUB_ENV 
+          
+      - name: Upload to release
+        uses: gacts/upload-to-release@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: 'dist/app/${{ env.DEB }}'
+          type: 'application/x-debian-package'
