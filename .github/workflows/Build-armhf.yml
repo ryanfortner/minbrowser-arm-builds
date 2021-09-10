@@ -1,0 +1,34 @@
+name: Build-armhf
+
+on:
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: save working directory in variable 'DIR'
+        run: echo "DIR=$(pwd)" >> $GITHUB_ENV
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+         node-version: '14'
+
+      - name: clone min repo and checkout latest release
+        run: |
+          cd $DIR
+          rm -rf min
+          git clone https://github.com/minbrowser/min
+          cd min
+          
+      - name: Build
+        run: |
+          cd $DIR/min
+          npm install
+          npm run buildRaspi
+          ls dist/
+          echo "DEB=$(basename dist/min*.deb)" >> $GITHUB_ENV 
