@@ -1,9 +1,9 @@
-name: Build-armhf
+name: Build-Debs
 
 on:
-  release:
-    types:
-      - created
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -27,16 +27,20 @@ jobs:
           
       - name: Build
         run: |
+          LATEST=`curl -s https://api.github.com/repos/minbrowser/min/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")'`
           cd $DIR/min
           npm install
           npm run buildRaspi
+          npm run buildLinuxArm64
           ls dist/app/
-          echo "DEB=$(basename dist/app/min*.deb)" >> $GITHUB_ENV 
           
-      - name: Upload to release
-        uses: docker://gacts/upload-to-release:latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          file: '${{ env.DIR }}/min/dist/app/${{ env.DEB }}'
-          type: 'application/x-debian-package'
+      - name: Upload
+        run: |
+          cd $DIR
+          git config user.name 'Ryan Fortner'
+          git config user.email 'ryanfortner@users.noreply.github.com'
+          mv min/dist/app/*.deb .
+          rm -rf min
+          git add .
+          git commit -m "update to ${LATEST}"
+          git push origin main
