@@ -38,8 +38,10 @@ jobs:
       - name: Upload
         run: |
           cd $DIR
+          LATEST=`curl -s https://api.github.com/repos/minbrowser/min/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")'`
           git config user.name 'Ryan Fortner'
           git config user.email 'ryanfortner@users.noreply.github.com'
+          rm -rf *.deb
           mv min/dist/app/*.deb .
           rm -rf min
           git add .
