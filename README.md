@@ -1,5 +1,5 @@
 # minbrowser-arm-builds
 
-The builds in the releases tab might be outdated. Use the debs from the repo's root folder.
+Thanks to the merge of [minbrowser/min pull #1813](https://github.com/minbrowser/min/pull/1813), official arm packages are now provided on the main min repository! Because of this, I am archiving this repository since it isn't needed anymore.
 
-New debs are automatically compiled every 24 hours.
+To install min, get the latest deb package and install it from [here](https://github.com/minbrowser/min/releases/latest).
